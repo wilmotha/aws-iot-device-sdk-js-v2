@@ -131,7 +131,7 @@ function random_temp() {
     } else if (value == 1) {
         return 87;
     } else {
-        return (Math.random() * (80-50)) + 40;
+        return ((Math.random() * (80-50)) + 40).toFixed(2);
     }
 }
 
@@ -143,7 +143,7 @@ function random_humidity() {
     } else if (value >= 90) {
         return .05;
     } else {
-        return (Math.random() * (.8-.4)) + .4
+        return ((Math.random() * (.8-.4)) + .4).toFixed(2);
     }
 }
 
