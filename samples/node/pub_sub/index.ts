@@ -124,7 +124,7 @@ yargs.command('*', false, (yargs: any) => {
 }, main).parse();
 
 function random_temp() {
-    const value = Math.floor(Math.random() * 10);
+    let value = Math.floor(Math.random() * 10);
 
     if (value == 0) {
         return -999;
@@ -136,7 +136,7 @@ function random_temp() {
 }
 
 function random_humidity() {
-    const value = Math.floor(Math.random() * 100);
+    let value = Math.floor(Math.random() * 100);
 
     if (value < 25) {
         return .95;
@@ -172,7 +172,7 @@ async function execute_session(connection: mqtt.MqttClientConnection, argv: Args
                     const msg = {
                         device_name: argv.deviceName,
                         readings: {
-                            temperature: argv.temperature,
+                            temperature: random_temp(),
                             humidity: argv.humidity
                         },
                         timestamp: argv.timestamp
