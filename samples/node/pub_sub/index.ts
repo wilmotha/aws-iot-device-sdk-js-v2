@@ -168,13 +168,12 @@ async function execute_session(connection: mqtt.MqttClientConnection, argv: Args
             await connection.subscribe(argv.topic, mqtt.QoS.AtLeastOnce, on_publish);
 
             for (let op_idx = 0; op_idx < argv.count; ++op_idx) {
-                let temp = random_temp();
                 const publish = async () => {
                     const msg = {
                         device_name: argv.deviceName,
                         readings: {
-                            temperature: temp,
-                            humidity: argv.humidity
+                            temperature: random_temp(),
+                            humidity: random_humidity()
                         },
                         timestamp: get_timestamp()
                     };
