@@ -107,17 +107,17 @@ yargs.command('*', false, (yargs: any) => {
         .option('deviceName', {
             description: 'Name of device',
             type: 'string',
-            value: 'AW-Sensor01'
+            default: 'AW-Sensor01'
         })
         .option('temperature', {
             description: 'temprature',
             type: 'number',
-            value: random_temp()
+            default: random_temp()
         })
         .option('humidity', {
             description: 'temprature',
             type: 'number',
-            value: random_humidity()
+            default: random_humidity()
         })
         .help()
         .alias('help', 'h')
@@ -168,7 +168,6 @@ async function execute_session(connection: mqtt.MqttClientConnection, argv: Args
                 const publish = async () => {
                     const msg = {
                         device_name: argv.deviceName,
-                        message: argv.message,
                         readings: {
                             temperature: argv.temperature,
                             humidity: argv.humidity
