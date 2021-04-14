@@ -96,7 +96,7 @@ yargs.command('*', false, (yargs: any) => {
         .option('interval', {
             description: 'Frequency of send',
             type: 'number',
-            value: 10000
+            default: 10000
         })
         .option('deviceName', {
             description: 'Name of device',
