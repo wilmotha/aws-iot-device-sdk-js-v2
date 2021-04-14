@@ -86,12 +86,6 @@ yargs.command('*', false, (yargs: any) => {
             type: 'number',
             required: false
         })
-        .option('message', {
-            alias: 'M',
-            description: 'Message to publish.',
-            type: 'string',
-            default: 'Hello world!'
-        })
         .option('verbosity', {
             alias: 'v',
             description: 'BOOLEAN: Verbose output',
@@ -118,6 +112,11 @@ yargs.command('*', false, (yargs: any) => {
             description: 'temprature',
             type: 'number',
             default: random_humidity()
+        })
+        .option('timestamp', {
+            description: "current time",
+            type: 'string',
+            default: get_timestamp()
         })
         .help()
         .alias('help', 'h')
@@ -148,6 +147,10 @@ function random_humidity() {
     }
 }
 
+function get_timestamp() {
+    return new Date;
+}
+
 async function execute_session(connection: mqtt.MqttClientConnection, argv: Args) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -172,7 +175,7 @@ async function execute_session(connection: mqtt.MqttClientConnection, argv: Args
                             temperature: argv.temperature,
                             humidity: argv.humidity
                         },
-                        sequence: op_idx + 1,
+                        timestamp: argv.timestamp
                     };
                     const json = JSON.stringify(msg);
                     connection.publish(argv.topic, json, mqtt.QoS.AtLeastOnce);
