@@ -102,16 +102,51 @@ yargs.command('*', false, (yargs: any) => {
         .option('interval', {
             description: 'Frequency of send',
             type: 'number',
-            value: 1000
+            value: 10000
         })
         .option('deviceName', {
             description: 'Name of device',
-            type: 'string'
+            type: 'string',
+            value: 'AW-Sensor01'
+        })
+        .option('temperature', {
+            description: 'temprature',
+            type: 'number',
+            value: random_temp()
+        })
+        .option('humidity', {
+            description: 'temprature',
+            type: 'number',
+            value: random_humidity()
         })
         .help()
         .alias('help', 'h')
         .showHelpOnFail(false)
 }, main).parse();
+
+function random_temp() {
+    const value = Math.floor(Math.random() * 10);
+
+    if (value == 0) {
+        return -999;
+    } else if (value == 1) {
+        return 87;
+    } else {
+        return (Math.random() * (50 - 80)) + 40;
+    }
+}
+
+function random_humidity() {
+    const value = Math.floor(Math.random() * 100);
+
+    if (value < 25) {
+        return .95;
+    } else if (value >= 90) {
+        return .05;
+    } else {
+        return (Math.random() * (.4-.8)) + .4
+    }
+}
 
 async function execute_session(connection: mqtt.MqttClientConnection, argv: Args) {
     return new Promise(async (resolve, reject) => {
@@ -134,9 +169,9 @@ async function execute_session(connection: mqtt.MqttClientConnection, argv: Args
                     const msg = {
                         device_name: argv.deviceName,
                         message: argv.message,
-                        temperature: 79,
-                        data: {
-                            humidity: 0.76
+                        readings: {
+                            temperature: argv.temperature,
+                            humidity: argv.humidity
                         },
                         sequence: op_idx + 1,
                     };
