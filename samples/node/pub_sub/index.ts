@@ -180,7 +180,7 @@ async function execute_session(connection: mqtt.MqttClientConnection, argv: Args
                     const json = JSON.stringify(msg);
                     connection.publish(argv.topic, json, mqtt.QoS.AtLeastOnce);
                 }
-                setTimeout(publish, op_idx * 10000);
+                setTimeout(publish, op_idx * argv.interval);
             }
         }
         catch (error) {
